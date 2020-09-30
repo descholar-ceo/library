@@ -1,71 +1,86 @@
-// STORAGE
-//     *
-//     DISPLAY THEM *
-//     ELSE *
-//     INITIALIZE AN EMPTY ARRAY *
-//     *
-//     *
-//     2. FUNCTION ADD BOOKS *
-//     *
-//     *
-//     4. UPDATE READ STATUS *
-//     *
-//     3. DELETE BOOKS *
-//     *
-//     *
-//     /
-const BOOK_AUTHOR = document.getElementById("book-author");
-const BOOK_TITLE = document.getElementById("book-title");
-const BOOK_PAGES = document.getElementById("book-pages");
-const NEW_BOOK_FORM = document.getElementById("new-book-form");
-const LIBRARY = [];
+/**
+ * 1. We need to add localstorage
+ * 2. Return a prper error message
+ */
 
-NEW_BOOK_FORM.addEventListener("submit", function(evt) {
-    evt.preventDefault();
-    addBookToLibrary();
-});
+const newBookForm = document.querySelector('#new-book-form');
+const newBookBtn = document.querySelector('#new-book-btn');
+const saveBookBtn = document.querySelector('#save-book-btn');
+const titleField = document.querySelector('#book-title');
+const pagesField = document.querySelector('#book-pages');
+const authorField = document.querySelector('#book-author');
+const booksListing = document.querySelector('#books-listing');
 
-class Book {
-    constructor(author, title, noOfPages) {
-        this._author = author;
-        this._title = title;
-        this._pages = noOfPages;
-    }
-
-    get writer() {
-        return this._author;
-    }
-
-
-    set writer(updatedAuthor) {
-        this._author = updatedAuthor;
-    }
-
-
-    set name(updatedName) {
-        this._title = updatedName;
-    }
-
-    get name() {
-        return this._title;
-    }
-
-    set noOfPages(updatedNoOfPages) {
-        this._pages = updatedNoOfPages;
-    }
-
-    get noOfPages() {
-        return this._pages;
-    }
-
-    get info() {
-        return `${this.name} by ${this.writer}, ${this.noOfPages} pages, not read yet`
-    }
-
+const myLibrary = [];
+function Book(title, pages, author, read) {
+  this.author = author;
+  this.pages = pages;
+  this.read = read;
+  this.title = title;
 }
 
-function addBookToLibrary() {
-    let newBook = new Book(BOOK_AUTHOR, BOOK_TITLE, BOOK_PAGES);
-    LIBRARY.push(newBook);
-
+function addBookToLibrary(myBook) {
+  myLibrary.push(myBook);
 }
+
+function displayBooks() {
+  const myLibrarySize = myLibrary.length;
+  if (myLibrarySize !== 0) {
+    booksListing.innerHTML = '';
+    for (let i = 0; i < myLibrarySize; i += 1) {
+      const individualBookContainer = document.createElement('div');
+      const titleSpan = document.createElement('span');
+      const pagesSpan = document.createElement('span');
+      const authorSpan = document.createElement('span');
+      const readStatusBtn = document.createElement('button');
+      const deleteBtn = document.createElement('button');
+
+      const titleText = document.createTextNode(myLibrary[i].title);
+      titleSpan.appendChild(titleText);
+      individualBookContainer.appendChild(titleSpan);
+
+      const pagesText = document.createTextNode(myLibrary[i].pages);
+      pagesSpan.appendChild(pagesText);
+      individualBookContainer.appendChild(pagesText);
+
+      const authorText = document.createTextNode(myLibrary[i].title);
+      authorSpan.appendChild(authorText);
+      individualBookContainer.appendChild(authorText);
+
+      const readText = document.createTextNode(myLibrary[i].read);
+      readStatusBtn.appendChild(readText);
+      individualBookContainer.appendChild(readText);
+
+      const deleteText = document.createTextNode('Delete');
+      deleteBtn.appendChild(deleteText);
+      individualBookContainer.appendChild(deleteBtn);
+
+      booksListing.appendChild(individualBookContainer);
+    }
+  } else {
+    booksListing.innerHTML = 'No books yet';
+  }
+}
+
+function startApplication() {
+  newBookBtn.addEventListener('click', () => {
+    newBookForm.classList.remove('hidden');
+    newBookBtn.classList.add('hidden');
+  });
+
+  saveBookBtn.addEventListener('click', () => {
+    const title = titleField.value;
+    const pages = pagesField.value;
+    const author = authorField.value;
+    const readStatus = document.querySelector('input[name=read-status]:checked').value;
+
+    const myBook = new Book(title, pages, author, readStatus);
+
+    addBookToLibrary(myBook);
+    newBookForm.reset();
+    displayBooks();
+  });
+}
+
+displayBooks();
+startApplication();

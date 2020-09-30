@@ -12,32 +12,60 @@
     <section>
         <h1 class="centered-text">Welcome to the Book Library</h1>
         <div class="centered-h-v">
-            <button type="button" class="rounded-corners custom-borders primary-btn">Add a new book</button>
+            <button
+                type="button"
+                class="rounded-corners custom-borders primary-btn"
+                id="new-book-btn">Add a new book</button>
         </div>
-        <form id="new-book-form">
+        <form id="new-book-form" class="hidden">
             <h3 class="centered-text">Fill book's details on this form</h3>
             <div class="book-details margin-top-10">
                 <label for="book-title">Book details: </label>
                 <div class="book-details-inputs">
-                    <input class="rounded-corners custom-borders" type="text" name="book-title" id="book-title" placeholder="Book title here..." />
+                    <input class="rounded-corners custom-borders"
+                        type="text"
+                        name="book-title" id="book-title" placeholder="Book title here..." />
                     <input class="rounded-corners custom-borders" type="number" name="book-pages" id="book-pages" placeholder="Book pages here..." />
                 </div>
             </div>
             <div class="book-details margin-top-20">
                 <label for="book-author">Book author: </label>
-                <input class="rounded-corners custom-borders long-input" type="text" name="book-author" id="book-author" placeholder="Book author here..." />
+                <input
+                    class="rounded-corners custom-borders long-input"
+                    type="text"
+                    name="book-author"
+                    id="book-author"
+                    placeholder="Book author here..." />
             </div>
             <div class="margin-top-20">
                 <label class="padding-right-10">Have you read that book?</label>
                 <label for="book-read">Yes</label>
-                <input class="rounded-corners custom-borders" type="radio" name="read-status" id="book-read" value="read">
+                <input
+                    class="rounded-corners custom-borders"
+                    type="radio"
+                    name="read-status"
+                    id="book-read"
+                    value="read">
                 <label for="book-unread">No</label>
-                <input class="rounded-corners custom-borders" type="radio" name="read-status" id="book-unread" value="unread">
+                <input
+                    class="rounded-corners custom-borders"
+                    type="radio"
+                    name="read-status"
+                    id="book-unread"
+                    value="unread"
+                    checked>
             </div>
             <div class="centered-h-v">
-                <button type="submit" class="rounded-corners custom-borders primary-btn">Save book</button>
+                <button
+                    type="button"
+                    class="rounded-corners custom-borders primary-btn"
+                    id="save-book-btn">
+                    Save book</button>
             </div>
         </form>
+    </section>
+    <section>
+        <div class="books-listing centered-h-v" id="books-listing"></div>
     </section>
     <script type="text/javascript" src="./index.js"></script>
 </body>
