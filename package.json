@@ -4,7 +4,9 @@
   "description": "This is a library project gotten from theodinproject on the following link https://www.theodinproject.com/courses/javascript/lessons/library",
   "scripts": {
     "stylelint": "npx stylelint **/*.{css,scss}",
-    "stylelint-f": "npx stylelint **/*.{css,scss} --fix"
+    "stylelint-f": "npx stylelint **/*.{css,scss} --fix",
+    "eslint": "eslint .",
+    "eslint-f": "eslint . --fix"
   },
   "repository": {
     "type": "git",
