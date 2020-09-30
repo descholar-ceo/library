@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./index.css">
     <title>Library</title>
 </head>
+
 <body>
     <section>
         <h1 class="centered-text">Welcome to the Book Library</h1>
@@ -18,21 +20,19 @@
                 <label for="book-title">Book details: </label>
                 <div class="book-details-inputs">
                     <input class="rounded-corners custom-borders" type="text" name="book-title" id="book-title" placeholder="Book title here..." />
-                <input class="rounded-corners custom-borders" type="number" name="book-pages" id="book-pages" placeholder="Book pages here..." />
+                    <input class="rounded-corners custom-borders" type="number" name="book-pages" id="book-pages" placeholder="Book pages here..." />
                 </div>
             </div>
-            <div class="book-details margin-top-10">
+            <div class="book-details margin-top-20">
                 <label for="book-author">Book author: </label>
                 <input class="rounded-corners custom-borders long-input" type="text" name="book-author" id="book-author" placeholder="Book author here..." />
             </div>
-            <div class="margin-top-10">
-                <label>Have you read that book?</label>
-                <div>
-                    <label for="book-read">Yes</label>
-                    <input class="rounded-corners custom-borders" type="radio" name="read-status" id="book-read" value="read">
-                    <label for="book-unread">No</label>
-                    <input class="rounded-corners custom-borders" type="radio" name="read-status" id="book-unread" value="unread">
-                </div>
+            <div class="margin-top-20">
+                <label class="padding-right-10">Have you read that book?</label>
+                <label for="book-read">Yes</label>
+                <input class="rounded-corners custom-borders" type="radio" name="read-status" id="book-read" value="read">
+                <label for="book-unread">No</label>
+                <input class="rounded-corners custom-borders" type="radio" name="read-status" id="book-unread" value="unread">
             </div>
             <div class="centered-h-v">
                 <button type="button" class="rounded-corners custom-borders primary-btn">Save book</button>
@@ -41,4 +41,5 @@
     </section>
     <script type="text/javascript" src="./index.js"></script>
 </body>
+
 </html>
