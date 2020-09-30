@@ -1,0 +1,34 @@
+{
+  "name": "library",
+  "version": "1.0.0",
+  "description": "This is a library project gotten from theodinproject on the following link https://www.theodinproject.com/courses/javascript/lessons/library",
+  "scripts": {
+    "stylelint": "npx stylelint **/*.{css,scss}",
+    "stylelint-f": "npx stylelint **/*.{css,scss} --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/descholar-ceo/library.git"
+  },
+  "keywords": [
+    "vanilla-javascript",
+    "array",
+    "local-storage",
+    "objects",
+    "object-constructors"
+  ],
+  "author": "descholar and Marylene",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/descholar-ceo/library/issues"
+  },
+  "homepage": "https://github.com/descholar-ceo/library#readme",
+  "devDependencies": {
+    "eslint": "^7.10.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "stylelint": "^13.3.3",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-scss": "^3.17.2"
+  }
+}
