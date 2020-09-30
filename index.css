@@ -22,7 +22,7 @@ section {
   padding: 10px;
 }
 
-form div{
+form div {
   width: 100%;
 }
 
@@ -35,7 +35,7 @@ input {
 .book-details {
   display: grid;
   grid-template-rows: 1fr 1fr;
-  row-gap: 0px;
+  row-gap: 0;
   place-items: center;
 }
 
@@ -45,7 +45,7 @@ input {
   column-gap: 5px;
 }
 
-.book-details-inputs input{
+.book-details-inputs input {
   width: 100%;
 }
 
@@ -71,7 +71,7 @@ input {
   flex-direction: row;
 }
 
-.centered-h-v{
+.centered-h-v {
   display: grid;
   place-items: center;
 }
