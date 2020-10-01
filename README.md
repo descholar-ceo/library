@@ -30,7 +30,6 @@ No special pre-requisite required for this project
 
 ### Setup
 - Run `git clone https://github.com/descholar-ceo/library && cd library` to get a copy of source codes on your local computer and to navigate inside the project directory
-- Run `npm install`
 
 ### Usage
 - If you have a live-server installed on you computer, you can open `index.html` file with that server, or simply open `index.html` file with your favorite browser

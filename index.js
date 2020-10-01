@@ -15,22 +15,22 @@ function Book(title, pages, author, read) {
   this.title = title;
 }
 
-function updateLocalStorage() {
+const updateLocalStorage = () => {
   localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
-}
+};
 
-function addBookToLibrary(myBook) {
+const addBookToLibrary = (myBook) => {
   myLibrary.push(myBook);
   updateLocalStorage();
-}
+};
 
-function removeBookFromLibrary(index, callback) {
+const removeBookFromLibrary = (index, callback) => {
   myLibrary.splice(index, 1);
   updateLocalStorage();
   callback();
-}
+};
 
-function updateBookReadStatus(book, callback) {
+const updateBookReadStatus = (book, callback) => {
   if (book.read === 'read') {
     book.read = 'unread';
   } else {
@@ -38,9 +38,9 @@ function updateBookReadStatus(book, callback) {
   }
   updateLocalStorage();
   callback();
-}
+};
 
-function displayBooks() {
+const displayBooks = () => {
   const myLibrarySize = myLibrary.length;
   if (myLibrarySize !== 0) {
     booksListing.innerHTML = '';
@@ -82,9 +82,9 @@ function displayBooks() {
   } else {
     booksListing.innerHTML = 'No books yet';
   }
-}
+};
 
-function isNoErrors() {
+const isNoErrors = () => {
   let isError = false;
 
   const fields = [titleField, pagesField, authorField];
@@ -110,9 +110,9 @@ function isNoErrors() {
     }
   }
   return isError;
-}
+};
 
-function startApplication() {
+const startApplication = () => {
   newBookBtn.addEventListener('click', () => {
     newBookForm.classList.remove('hidden');
     newBookBtn.classList.add('hidden');
@@ -131,7 +131,7 @@ function startApplication() {
       displayBooks();
     }
   });
-}
+};
 
 displayBooks();
 startApplication();
