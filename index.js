@@ -11,7 +11,7 @@ const pagesField = document.querySelector('#book-pages');
 const authorField = document.querySelector('#book-author');
 const booksListing = document.querySelector('#books-listing');
 
-const myLibrary = [];
+let myLibrary = [];
 
 function Book(title, pages, author, read) {
     this.author = author;
@@ -21,11 +21,29 @@ function Book(title, pages, author, read) {
 }
 
 function addBookToLibrary(myBook) {
+
     myLibrary.push(myBook);
 }
 
+function removeBookFromLibrary(index) {
+    myLibrary.splice(index, 1);
+
+    displayBooks();
+}
+
+function updateBookReadStatus(book) {
+    if (book.read === 'read') {
+        book.read = 'unread'
+    } else {
+        book.read = 'read'
+    }
+
+    displayBooks();
+}
+
 function displayBooks() {
-    const myLibrarySize = myLibrary.length;
+
+    myLibrarySize = myLibrary.length
     if (myLibrarySize !== 0) {
         booksListing.innerHTML = '';
         for (let i = 0; i < myLibrarySize; i += 1) {
@@ -38,24 +56,29 @@ function displayBooks() {
 
             individualBookContainer.setAttribute('class', 'individual-book-container')
 
-            const titleText = document.createTextNode(myLibrary[i].title);
-            titleSpan.appendChild(titleText);
+            titleSpan.textContent = myLibrary[i].title;
             individualBookContainer.appendChild(titleSpan);
 
-            const pagesText = document.createTextNode(myLibrary[i].pages);
-            pagesSpan.appendChild(pagesText);
-            individualBookContainer.appendChild(pagesText);
 
-            const authorText = document.createTextNode(myLibrary[i].author);
-            authorSpan.appendChild(authorText);
-            individualBookContainer.appendChild(authorText);
+            pagesSpan.textContent = myLibrary[i].pages;
+            individualBookContainer.appendChild(pagesSpan);
 
-            const readText = document.createTextNode(myLibrary[i].read);
-            readStatusBtn.appendChild(readText);
-            individualBookContainer.appendChild(readText);
 
-            const deleteText = document.createTextNode('Delete');
-            deleteBtn.appendChild(deleteText);
+            authorSpan.textContent = myLibrary[i].author;
+            individualBookContainer.appendChild(authorSpan);
+
+            readStatusBtn.textContent = myLibrary[i].read;
+            readStatusBtn.addEventListener('click', () => {
+                updateBookReadStatus(myLibrary[i]);
+
+            });
+            individualBookContainer.appendChild(readStatusBtn);
+
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.addEventListener('click', () => {
+                removeBookFromLibrary(i)
+
+            });
             individualBookContainer.appendChild(deleteBtn);
 
             booksListing.appendChild(individualBookContainer);
@@ -66,6 +89,7 @@ function displayBooks() {
 }
 
 function startApplication() {
+
     newBookBtn.addEventListener('click', () => {
         newBookForm.classList.remove('hidden');
         newBookBtn.classList.add('hidden');
@@ -80,7 +104,9 @@ function startApplication() {
         const myBook = new Book(title, pages, author, readStatus);
 
         addBookToLibrary(myBook);
+
         newBookForm.reset();
+
         displayBooks();
     });
 }
