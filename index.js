@@ -40,48 +40,45 @@ const updateBookReadStatus = (book, callback) => {
   callback();
 };
 
-const displayBooks = () => {
-  const myLibrarySize = myLibrary.length;
-  if (myLibrarySize !== 0) {
-    booksListing.innerHTML = '';
-    for (let i = myLibrarySize - 1; i >= 0; i -= 1) {
-      const individualBookContainer = document.createElement('div');
-      const titleSpan = document.createElement('span');
-      const pagesSpan = document.createElement('span');
-      const authorSpan = document.createElement('span');
-      const readStatusBtn = document.createElement('button');
-      const deleteBtn = document.createElement('button');
+const addBookToDiv = (index) => {
+  const individualBookContainer = document.createElement('div');
+  const titleSpan = document.createElement('span');
+  const pagesSpan = document.createElement('span');
+  const authorSpan = document.createElement('span');
+  const readStatusBtn = document.createElement('button');
+  const deleteBtn = document.createElement('button');
 
-      individualBookContainer.setAttribute('class', 'individual-book-container');
+  individualBookContainer.setAttribute('class', 'individual-book-container');
 
-      titleSpan.textContent = myLibrary[i].title;
-      individualBookContainer.appendChild(titleSpan);
+  titleSpan.textContent = myLibrary[index].title;
+  individualBookContainer.appendChild(titleSpan);
 
-      pagesSpan.textContent = myLibrary[i].pages;
-      individualBookContainer.appendChild(pagesSpan);
+  pagesSpan.textContent = myLibrary[index].pages;
+  individualBookContainer.appendChild(pagesSpan);
 
-      authorSpan.textContent = myLibrary[i].author;
-      individualBookContainer.appendChild(authorSpan);
+  authorSpan.textContent = myLibrary[index].author;
+  individualBookContainer.appendChild(authorSpan);
 
-      readStatusBtn.textContent = myLibrary[i].read;
-      readStatusBtn.setAttribute('class', 'btn-status');
-      readStatusBtn.addEventListener('click', () => {
-        updateBookReadStatus(myLibrary[i], displayBooks);
-      });
-      individualBookContainer.appendChild(readStatusBtn);
+  readStatusBtn.textContent = myLibrary[index].read;
+  readStatusBtn.setAttribute('class', 'btn-status');
+  readStatusBtn.addEventListener('click', () => {
+    updateBookReadStatus(myLibrary[index], displayBooks);
+  });
+  individualBookContainer.appendChild(readStatusBtn);
 
-      deleteBtn.textContent = 'Delete';
-      deleteBtn.setAttribute('class', 'btn-danger');
-      deleteBtn.addEventListener('click', () => {
-        removeBookFromLibrary(i, displayBooks);
-      });
-      individualBookContainer.appendChild(deleteBtn);
+  deleteBtn.textContent = 'Delete';
+  deleteBtn.setAttribute('class', 'btn-danger');
+  deleteBtn.addEventListener('click', () => {
+    removeBookFromLibrary(index, displayBooks);
+  });
+  individualBookContainer.appendChild(deleteBtn);
 
-      booksListing.appendChild(individualBookContainer);
-    }
-  } else {
-    booksListing.innerHTML = 'No books yet';
-  }
+  booksListing.appendChild(individualBookContainer);
+};
+
+const emptyingDiv = divToEmpty => { divToEmpty.innerHTML = ''; };
+const setDefaultTextToDiv = (divToSetDefault, defaultToSet) => {
+  divToSetDefault.innerHTML = defaultToSet;
 };
 
 const isNoErrors = () => {
@@ -110,6 +107,18 @@ const isNoErrors = () => {
     }
   }
   return isError;
+};
+
+const displayBooks = () => {
+  const myLibrarySize = myLibrary.length;
+  if (myLibrarySize !== 0) {
+    emptyingDiv(booksListing);
+    for (let index = myLibrarySize - 1; index >= 0; index -= 1) {
+      addBookToDiv(index);
+    }
+  } else {
+    setDefaultTextToDiv(booksListing, 'No books yet!');
+  }
 };
 
 const startApplication = () => {
