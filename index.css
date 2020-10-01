@@ -103,6 +103,45 @@ input[type="radio"] {
 .individual-book-container {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(5, 1fr);
   grid-column-gap: 5px;
+  margin-top: 5px;
+}
+
+.individual-book-container button {
+  width: 60%;
+}
+
+.btn-danger {
+  border-radius: 0.3rem;
+  border: 1px solid rgb(255, 0, 0);
+  color: rgb(255, 0, 0);
+  cursor: pointer;
+  background: rgb(255, 255, 255);
+}
+
+.btn-danger:hover {
+  background-color: rgb(255, 0, 0);
+  color: rgb(255, 255, 255);
+  outline: none;
+  border: none;
+}
+
+.btn-status {
+  border-radius: 0.3rem;
+  border: 1px solid rgb(0, 0, 255);
+  color: rgb(0, 0, 255);
+  cursor: pointer;
+  background: rgb(255, 255, 255);
+}
+
+.btn-status:hover {
+  background-color: rgb(0, 0, 255);
+  color: rgb(255, 255, 255);
+  outline: none;
+  border: none;
+}
+
+.error-field {
+  border: 1px solid rgb(255, 0, 0);
 }

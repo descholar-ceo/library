@@ -1,8 +1,3 @@
-/**
- * 1. We need to add localstorage
- * 2. Return a prper error message
- * 3. Implement the delete button
- */
 const newBookForm = document.querySelector('#new-book-form');
 const newBookBtn = document.querySelector('#new-book-btn');
 const saveBookBtn = document.querySelector('#save-book-btn');
@@ -11,7 +6,7 @@ const pagesField = document.querySelector('#book-pages');
 const authorField = document.querySelector('#book-author');
 const booksListing = document.querySelector('#books-listing');
 
-const myLibrary = [];
+const myLibrary = localStorage.getItem('myLibrary') ? JSON.parse(localStorage.getItem('myLibrary')) : [];
 
 function Book(title, pages, author, read) {
   this.author = author;
@@ -20,12 +15,18 @@ function Book(title, pages, author, read) {
   this.title = title;
 }
 
+function updateLocalStorage() {
+  localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
+}
+
 function addBookToLibrary(myBook) {
   myLibrary.push(myBook);
+  updateLocalStorage();
 }
 
 function removeBookFromLibrary(index, callback) {
   myLibrary.splice(index, 1);
+  updateLocalStorage();
   callback();
 }
 
@@ -35,7 +36,7 @@ function updateBookReadStatus(book, callback) {
   } else {
     book.read = 'read';
   }
-
+  updateLocalStorage();
   callback();
 }
 
@@ -43,7 +44,7 @@ function displayBooks() {
   const myLibrarySize = myLibrary.length;
   if (myLibrarySize !== 0) {
     booksListing.innerHTML = '';
-    for (let i = 0; i < myLibrarySize; i += 1) {
+    for (let i = myLibrarySize - 1; i >= 0; i -= 1) {
       const individualBookContainer = document.createElement('div');
       const titleSpan = document.createElement('span');
       const pagesSpan = document.createElement('span');
@@ -63,12 +64,14 @@ function displayBooks() {
       individualBookContainer.appendChild(authorSpan);
 
       readStatusBtn.textContent = myLibrary[i].read;
+      readStatusBtn.setAttribute('class', 'btn-status');
       readStatusBtn.addEventListener('click', () => {
         updateBookReadStatus(myLibrary[i], displayBooks);
       });
       individualBookContainer.appendChild(readStatusBtn);
 
       deleteBtn.textContent = 'Delete';
+      deleteBtn.setAttribute('class', 'btn-danger');
       deleteBtn.addEventListener('click', () => {
         removeBookFromLibrary(i, displayBooks);
       });
@@ -79,6 +82,25 @@ function displayBooks() {
   } else {
     booksListing.innerHTML = 'No books yet';
   }
+}
+
+function isNoErrors() {
+  let isError = false;
+  if (!titleField.value) {
+    titleField.classList.add('error-field');
+    isError = true;
+  } else if (!pagesField.value) {
+    pagesField.classList.add('error-field');
+    isError = true;
+  } else if (!authorField.value) {
+    authorField.classList.add('error-field');
+    isError = true;
+  } else {
+    titleField.classList.remove('error-field');
+    pagesField.classList.remove('error-field');
+    authorField.classList.remove('error-field');
+  }
+  return isError;
 }
 
 function startApplication() {
@@ -93,13 +115,12 @@ function startApplication() {
     const author = authorField.value;
     const readStatus = document.querySelector('input[name=read-status]:checked').value;
 
-    const myBook = new Book(title, pages, author, readStatus);
-
-    addBookToLibrary(myBook);
-
-    newBookForm.reset();
-
-    displayBooks();
+    if (!isNoErrors()) {
+      const myBook = new Book(title, pages, author, readStatus);
+      addBookToLibrary(myBook);
+      newBookForm.reset();
+      displayBooks();
+    }
   });
 }
 
