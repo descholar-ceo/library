@@ -11,104 +11,96 @@ const pagesField = document.querySelector('#book-pages');
 const authorField = document.querySelector('#book-author');
 const booksListing = document.querySelector('#books-listing');
 
-let myLibrary = [];
+const myLibrary = [];
 
 function Book(title, pages, author, read) {
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-    this.title = title;
+  this.author = author;
+  this.pages = pages;
+  this.read = read;
+  this.title = title;
 }
 
 function addBookToLibrary(myBook) {
-
-    myLibrary.push(myBook);
+  myLibrary.push(myBook);
 }
 
-function removeBookFromLibrary(index) {
-    myLibrary.splice(index, 1);
-
-    displayBooks();
+function removeBookFromLibrary(index, callback) {
+  myLibrary.splice(index, 1);
+  callback();
 }
 
-function updateBookReadStatus(book) {
-    if (book.read === 'read') {
-        book.read = 'unread'
-    } else {
-        book.read = 'read'
-    }
+function updateBookReadStatus(book, callback) {
+  if (book.read === 'read') {
+    book.read = 'unread';
+  } else {
+    book.read = 'read';
+  }
 
-    displayBooks();
+  callback();
 }
 
 function displayBooks() {
+  const myLibrarySize = myLibrary.length;
+  if (myLibrarySize !== 0) {
+    booksListing.innerHTML = '';
+    for (let i = 0; i < myLibrarySize; i += 1) {
+      const individualBookContainer = document.createElement('div');
+      const titleSpan = document.createElement('span');
+      const pagesSpan = document.createElement('span');
+      const authorSpan = document.createElement('span');
+      const readStatusBtn = document.createElement('button');
+      const deleteBtn = document.createElement('button');
 
-    myLibrarySize = myLibrary.length
-    if (myLibrarySize !== 0) {
-        booksListing.innerHTML = '';
-        for (let i = 0; i < myLibrarySize; i += 1) {
-            const individualBookContainer = document.createElement('div');
-            const titleSpan = document.createElement('span');
-            const pagesSpan = document.createElement('span');
-            const authorSpan = document.createElement('span');
-            const readStatusBtn = document.createElement('button');
-            const deleteBtn = document.createElement('button');
+      individualBookContainer.setAttribute('class', 'individual-book-container');
 
-            individualBookContainer.setAttribute('class', 'individual-book-container')
+      titleSpan.textContent = myLibrary[i].title;
+      individualBookContainer.appendChild(titleSpan);
 
-            titleSpan.textContent = myLibrary[i].title;
-            individualBookContainer.appendChild(titleSpan);
+      pagesSpan.textContent = myLibrary[i].pages;
+      individualBookContainer.appendChild(pagesSpan);
 
+      authorSpan.textContent = myLibrary[i].author;
+      individualBookContainer.appendChild(authorSpan);
 
-            pagesSpan.textContent = myLibrary[i].pages;
-            individualBookContainer.appendChild(pagesSpan);
+      readStatusBtn.textContent = myLibrary[i].read;
+      readStatusBtn.addEventListener('click', () => {
+        updateBookReadStatus(myLibrary[i], displayBooks);
+      });
+      individualBookContainer.appendChild(readStatusBtn);
 
+      deleteBtn.textContent = 'Delete';
+      deleteBtn.addEventListener('click', () => {
+        removeBookFromLibrary(i, displayBooks);
+      });
+      individualBookContainer.appendChild(deleteBtn);
 
-            authorSpan.textContent = myLibrary[i].author;
-            individualBookContainer.appendChild(authorSpan);
-
-            readStatusBtn.textContent = myLibrary[i].read;
-            readStatusBtn.addEventListener('click', () => {
-                updateBookReadStatus(myLibrary[i]);
-
-            });
-            individualBookContainer.appendChild(readStatusBtn);
-
-            deleteBtn.textContent = 'Delete';
-            deleteBtn.addEventListener('click', () => {
-                removeBookFromLibrary(i)
-
-            });
-            individualBookContainer.appendChild(deleteBtn);
-
-            booksListing.appendChild(individualBookContainer);
-        }
-    } else {
-        booksListing.innerHTML = 'No books yet';
+      booksListing.appendChild(individualBookContainer);
     }
+  } else {
+    booksListing.innerHTML = 'No books yet';
+  }
 }
 
 function startApplication() {
+  newBookBtn.addEventListener('click', () => {
+    newBookForm.classList.remove('hidden');
+    newBookBtn.classList.add('hidden');
+  });
 
-    newBookBtn.addEventListener('click', () => {
-        newBookForm.classList.remove('hidden');
-        newBookBtn.classList.add('hidden');
-    });
+  saveBookBtn.addEventListener('click', () => {
+    const title = titleField.value;
+    const pages = pagesField.value;
+    const author = authorField.value;
+    const readStatus = document.querySelector('input[name=read-status]:checked').value;
 
-    saveBookBtn.addEventListener('click', () => {
-        const title = titleField.value;
-        const pages = pagesField.value;
-        const author = authorField.value;
-        const readStatus = document.querySelector('input[name=read-status]:checked').value;
+    const myBook = new Book(title, pages, author, readStatus);
 
-        const myBook = new Book(title, pages, author, readStatus);
+    addBookToLibrary(myBook);
 
-        addBookToLibrary(myBook);
+    newBookForm.reset();
 
-        newBookForm.reset();
-
-        displayBooks();
-    });
+    displayBooks();
+  });
 }
 
 displayBooks();
